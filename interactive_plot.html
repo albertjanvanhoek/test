@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plotly Slider Example</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="plot"></div>
+    <div id="sliders"></div>
+
+    <script>
+        // Define the data
+        var data = [
+          {
+            x: [200, 400, 600, 800],
+            y: [10, 15, 13, 17],
+            text: ['Project A', 'Project B', 'Project C', 'Project D'],
+            mode: 'markers+text',
+            marker: {
+              size: 12,
+              color: 'blue'
+            },
+            type: 'scatter',
+            name: '',
+            textposition: 'right',
+            hovertemplate:
+              "<b>%{text}</b><br><br>" +
+              "Benefits: %{x}<br>" +
+              "Costs: %{y}<extra></extra>"
+          }
+        ];
+
+        // Define the layout
+        var layout = {
+            title: 'Cost vs. Benefits by Project',
+            xaxis: {
+                title: 'Benefits',
+                range: [0, 1000],
+                fixedrange: true,
+            },
+            yaxis: {
+                title: 'Costs',
+                range: [0, 10],
+                fixedrange: true,
+            },
+            hovermode: 'closest',
+        };
+
+        // Define the config
+        var config = {
+            responsive: true,
+            displayModeBar: false,
+        };
+
+        // Define the plot div
+        var plotDiv = document.getElementById('plot');
+
+        // Create the plot
+        Plotly.newPlot(plotDiv, data, layout, config);
+
+        // Define the sliders
+        var slider1 = createSlider('slider1', 'Project A');
+        var slider2 = createSlider('slider2', 'Project B');
+        var slider3 = createSlider('slider3', 'Project C');
+        var slider4 = createSlider('slider4', 'Project D');
+
+        // Add the sliders to the sliders div
+        var slidersDiv = document.getElementById('sliders');
+        slidersDiv.appendChild(slider1);
+        slidersDiv.appendChild(slider2);
+        slidersDiv.appendChild(slider3);
+        slidersDiv.appendChild(slider4);
+
+        // Function to create a slider
+        function createSlider(sliderId, projectName) {
+            var sliderContainer = document.createElement('div');
+            sliderContainer.id = sliderId;
+            sliderContainer.classList.add('slider-container');
+
+            var sliderLabel = document.createElement('div');
+            sliderLabel.innerText = projectName;
+            sliderLabel.classList.add('slider-label');
+
+            var sliderInput = document.createElement('input');
+            sliderInput.type = 'range';
+            sliderInput.min = 0;
+            sliderInput.max = 1000;
+            sliderInput.value = 500;
+            sliderInput.classList.add('slider-input');
+            sliderInput.addEventListener('input', function () {
+                var xValue = parseInt(this.value);
+                var pointIndex = data[0].text.indexOf(projectName);
+
+                data[0].x[pointIndex] = xValue;
+                Plotly.redraw(plotDiv);
+            });
+
+            sliderContainer.appendChild(sliderLabel);
+            sliderContainer.appendChild(sliderInput);
+
+            return sliderContainer;
+        }
+    </script>
+
+    <style>
+        .slider-container {
+            margin: 10
+            <style>
+    .slider-container {
+        margin: 10px 0;
+    }
+
+    .slider-label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .slider-input {
+        width: 100%;
+    }
+
+    .project-dot {
+        stroke-width: 1px;
+    }
+</style>
+</body></html>
